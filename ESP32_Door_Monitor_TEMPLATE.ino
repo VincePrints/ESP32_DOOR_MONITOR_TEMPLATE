@@ -10,7 +10,7 @@
 #define TOKEN "[]" // Put your Ubidots' TOKEN
 #define MQTT_CLIENT_NAME "[]" // MQTT Client Name, 8-12 alphanumeric character ASCII string; 
                               //Unique ASCII string and different from all other devices
-const char * VARIABLE_LABEL_1 = "ReedSwitch"; // Assing the variable label
+const char * VARIABLE_LABEL_1 = "[]"; // Assing the variable label
 const char * VARIABLE_LABEL_2 = "VBat"; // Assign the variable label
 const char * DEVICE_LABEL = "esp32"; // Assig the device label
 
@@ -24,7 +24,7 @@ char payload[100];
 char topic[150];
 
 // Space to store values to send
-char str_reedSwitch[10];
+char str_SENSOR[10];
 char str_VBat[10];
 
 //Call clients
@@ -107,13 +107,13 @@ void loop() {
   VBat = ((VBat*1.63)/1000);
 
   //Convert float to character array
-  dtostrf(reedSwitch, 4, 2, str_reedSwitch);
+  dtostrf(reedSwitch, 4, 2, str_SENSOR);
   dtostrf(VBat, 4, 2, str_VBat);
 
   //Format and post data
   sprintf(topic, "%s%s", "/v1.6/devices/", DEVICE_LABEL);
   sprintf(payload, "%s", ""); // Cleans the payload
-  sprintf(payload, "{\"%s\": %s,", VARIABLE_LABEL_1, str_reedSwitch); // Adds the variable label
+  sprintf(payload, "{\"%s\": %s,", VARIABLE_LABEL_1, str_SENSOR); // Adds the variable label
   sprintf(payload, "%s\"%s\": %s}", payload, VARIABLE_LABEL_2, str_VBat); // Adds the variable label
   Serial.println("Publishing data to Ubidots Cloud");
   Serial.print("reedSwitch = ");
